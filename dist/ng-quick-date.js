@@ -57,7 +57,8 @@
         scope: {
           dateFilter: '=?',
           onChange: "&",
-          required: '@'
+          required: '@',
+          resDateFormat: '='
         },
         replace: true,
         link: function(scope, element, attrs, ngModelCtrl) {
@@ -114,6 +115,7 @@
             setupCalendarView();
             setInputFieldValues(date);
             scope.mainButtonStr = date ? $filter('date')(date, scope.labelFormat) : scope.placeholder;
+            scope.mainButtonStr = (typeof scope.resDateFormat === 'function') && date ? scope.resDateFormat(date) : scope.mainButtonStr;
             return scope.invalid = ngModelCtrl.$invalid;
           };
           setInputFieldValues = function(val) {

@@ -52,6 +52,7 @@ app.directive "quickDatepicker", ['ngQuickDateDefaults', '$filter', '$sce', (ngQ
     dateFilter: '=?'
     onChange: "&"
     required: '@'
+    resDateFormat: '='  #changes the representation of the date (mainButtonStr value)
 
   replace: true
   link: (scope, element, attrs, ngModelCtrl) ->
@@ -110,6 +111,7 @@ app.directive "quickDatepicker", ['ngQuickDateDefaults', '$filter', '$sce', (ngQ
       setupCalendarView()
       setInputFieldValues(date)
       scope.mainButtonStr = if date then $filter('date')(date, scope.labelFormat) else scope.placeholder
+      scope.mainButtonStr = if (typeof scope.resDateFormat == 'function') && date then scope.resDateFormat date else scope.mainButtonStr
       scope.invalid = ngModelCtrl.$invalid
 
 
